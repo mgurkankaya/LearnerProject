@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace LearnerProject.Controllers
 {
@@ -54,6 +55,35 @@ namespace LearnerProject.Controllers
             context.Students.Add(student);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult StudentLogin()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult StudentLogin(Student student)
+        {
+            var value = context.Students.FirstOrDefault(x => x.UserName == student.UserName && x.Password == student.Password);
+            if (value != null)
+            {
+                FormsAuthentication.SetAuthCookie(value.UserName, false);
+                Session["student"] = value.UserName;
+                return RedirectToAction("Index", "StudentDashboard");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalı!");
+                return View();
+            }
+        }
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index", "Default");
         }
     }
 }
