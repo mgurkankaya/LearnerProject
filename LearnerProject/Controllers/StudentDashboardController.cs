@@ -39,6 +39,8 @@ namespace LearnerProject.Controllers
         [HttpPost]
         public ActionResult AddReview(Review review)
         {
+            string studentName = Session["student"].ToString();
+            review.StudentId = context.Students.Where(x => x.UserName == studentName).Select(x=>x.StudentId).FirstOrDefault();
             context.Reviews.Add(review);
             context.SaveChanges();
             return RedirectToAction("Index");

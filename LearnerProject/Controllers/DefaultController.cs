@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace LearnerProject.Controllers
 {
+    [AllowAnonymous]
     public class DefaultController : Controller
     {
         LearnerContext context = new LearnerContext();

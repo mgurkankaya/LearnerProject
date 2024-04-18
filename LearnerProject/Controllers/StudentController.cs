@@ -56,6 +56,7 @@ namespace LearnerProject.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult StudentLogin()
         {

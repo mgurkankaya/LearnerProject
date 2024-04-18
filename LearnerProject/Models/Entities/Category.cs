@@ -11,7 +11,6 @@ namespace LearnerProject.Models.Entities
         public string CategoryName { get; set; }
         public string Icon { get; set; }
         public bool Status { get; set; }
-
         public List<Course> Courses { get; set; } //İlişki
     }
 }

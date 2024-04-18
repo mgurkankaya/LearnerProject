@@ -6,25 +6,22 @@ using System.Web.Mvc;
 
 namespace LearnerProject.Controllers
 {
-    public class AdminLayoutController : Controller
+    public class TeacherLayoutController : Controller
     {
-
-        // GET: AdminLayout
+        // GET: TeacherLayout
         public ActionResult Index()
         {
             return View();
         }
 
-        public PartialViewResult AdminLayoutHead()
+        public PartialViewResult TeacherLayoutHead()
         {
             return PartialView();
         }
 
-        public PartialViewResult AdminLayoutSidebar()
+        public PartialViewResult TeacherLayoutSidebar()
         {
             return PartialView();
         }
     }
-
-
 }
