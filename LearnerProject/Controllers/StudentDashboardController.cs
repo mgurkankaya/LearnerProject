@@ -11,9 +11,12 @@ namespace LearnerProject.Controllers
     public class StudentDashboardController : Controller
     {
        LearnerContext context = new LearnerContext();
-        public ActionResult Index()
+        public ActionResult Index(string p)
         {
-            var values = context.Reviews.ToList();
+            p = (string)Session["student"];
+            var studentIdInfo = context.Students.Where(x=>x.UserName == p).Select(x => x.StudentId).FirstOrDefault();
+            var values = context.Reviews.Where(x=>x.StudentId==studentIdInfo).ToList();
+            
             return View(values);
         }
 
@@ -78,6 +81,9 @@ namespace LearnerProject.Controllers
         [HttpPost]
         public ActionResult UpdateReview(Review review)
         {
+
+            string studentName = Session["student"].ToString();
+            review.StudentId = context.Students.Where(x => x.UserName == studentName).Select(x => x.StudentId).FirstOrDefault();
             var value = context.Reviews.Find(review.ReviewId);
             
             
@@ -92,5 +98,7 @@ namespace LearnerProject.Controllers
             return RedirectToAction("Index");
 
         }
+
+       
     }
 }

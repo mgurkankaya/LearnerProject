@@ -69,8 +69,12 @@ namespace LearnerProject.Controllers
             var value = context.Students.FirstOrDefault(x => x.UserName == student.UserName && x.Password == student.Password);
             if (value != null)
             {
+
+ 
                 FormsAuthentication.SetAuthCookie(value.UserName, false);
                 Session["student"] = value.UserName;
+
+
                 return RedirectToAction("Index", "StudentDashboard");
             }
             else
@@ -85,6 +89,23 @@ namespace LearnerProject.Controllers
             FormsAuthentication.SignOut();
             Session.Abandon();
             return RedirectToAction("Index", "Default");
+        }
+
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Register(Student student)
+        {
+            context.Students.Add(student);
+            context.SaveChanges();
+            return RedirectToAction("StudentLogin", "Student");
         }
     }
 }

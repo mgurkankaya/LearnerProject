@@ -12,5 +12,8 @@ namespace LearnerProject.Models.Entities
         public String UserName { get; set; }
         public String Password { get; set; }
         public List<Course> Courses { get; set; }
+        public List<CourseVideo> CourseVideos { get; set;}
+
+
     }
 }

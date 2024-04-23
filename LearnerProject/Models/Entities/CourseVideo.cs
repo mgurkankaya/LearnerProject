@@ -12,5 +12,8 @@ namespace LearnerProject.Models.Entities
         public virtual Course Course { get; set; }
         public int VideNumber { get; set; }
         public String VideoUrl { get; set; }
+
+        public int? TeacherId { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

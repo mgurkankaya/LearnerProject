@@ -134,13 +134,16 @@
     <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseRegisterController.cs" />
+    <Compile Include="Controllers\CourseVideoController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\FAQController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\StudentCourseController.cs" />
     <Compile Include="Controllers\StudentDashboardController.cs" />
     <Compile Include="Controllers\StudentLayoutController.cs" />
     <Compile Include="Controllers\TeacherCourseController.cs" />
@@ -151,34 +154,25 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202404021923531_initial.cs" />
-    <Compile Include="Migrations\202404021923531_initial.Designer.cs">
-      <DependentUpon>202404021923531_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404041745321_mig_remove_relation_classroom_and_course.cs" />
-    <Compile Include="Migrations\202404041745321_mig_remove_relation_classroom_and_course.Designer.cs">
-      <DependentUpon>202404041745321_mig_remove_relation_classroom_and_course.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404181727466_teacher-table-added.cs" />
-    <Compile Include="Migrations\202404181727466_teacher-table-added.Designer.cs">
-      <DependentUpon>202404181727466_teacher-table-added.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202404181929186_mig_course_video_table_added.cs" />
-    <Compile Include="Migrations\202404181929186_mig_course_video_table_added.Designer.cs">
-      <DependentUpon>202404181929186_mig_course_video_table_added.cs</DependentUpon>
+    <Compile Include="Migrations\202404231939577_new-mig.cs" />
+    <Compile Include="Migrations\202404231939577_new-mig.Designer.cs">
+      <DependentUpon>202404231939577_new-mig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Class\IEClass.cs" />
     <Compile Include="Models\Context\LearnerContext.cs" />
+    <Compile Include="Models\CoursereReviewViewModel.cs" />
     <Compile Include="Models\Entities\About.cs" />
     <Compile Include="Models\Entities\AdminLogin.cs" />
     <Compile Include="Models\Entities\Banner.cs" />
     <Compile Include="Models\Entities\Category.cs" />
     <Compile Include="Models\Entities\Classroom.cs" />
+    <Compile Include="Models\Entities\Contact.cs" />
     <Compile Include="Models\Entities\Course.cs" />
     <Compile Include="Models\Entities\CourseRegister.cs" />
     <Compile Include="Models\Entities\CourseVideo.cs" />
     <Compile Include="Models\Entities\FAQ.cs" />
+    <Compile Include="Models\Entities\Message.cs" />
     <Compile Include="Models\Entities\Review.cs" />
     <Compile Include="Models\Entities\Student.cs" />
     <Compile Include="Models\Entities\Teacher.cs" />
@@ -674,9 +668,23 @@
     <Content Include="Views\TeacherLogin\Index.cshtml" />
     <Content Include="Views\TeacherCourse\AddCourse.cshtml" />
     <Content Include="Views\TeacherCourse\UpdateCourse.cshtml" />
+    <Content Include="Views\Default\CourseDetail.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Contact\ContactInfo.cshtml" />
+    <Content Include="Views\Contact\SendMessage.cshtml" />
+    <Content Include="Views\Student\Register.cshtml" />
+    <Content Include="Views\StudentDashboard\UpdateReview.cshtml" />
+    <Content Include="Views\CourseVideo\Index.cshtml" />
+    <Content Include="Views\TeacherCourse\AddCourseVideo.cshtml" />
+    <Content Include="Views\TeacherCourse\CourseVideo.cshtml" />
+    <Content Include="Views\TeacherCourse\UpdateCourseVideo.cshtml" />
+    <Content Include="Views\CourseRegister\StudentCourseRegister.cshtml" />
+    <Content Include="Views\StudentCourse\Index.cshtml" />
+    <Content Include="Views\StudentCourse\MyCourseList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -706,17 +714,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202404021923531_initial.resx">
-      <DependentUpon>202404021923531_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404041745321_mig_remove_relation_classroom_and_course.resx">
-      <DependentUpon>202404041745321_mig_remove_relation_classroom_and_course.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404181727466_teacher-table-added.resx">
-      <DependentUpon>202404181727466_teacher-table-added.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202404181929186_mig_course_video_table_added.resx">
-      <DependentUpon>202404181929186_mig_course_video_table_added.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202404231939577_new-mig.resx">
+      <DependentUpon>202404231939577_new-mig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -10,6 +10,7 @@ namespace LearnerProject.Models.Class
     {
         public IEnumerable<Course> CourseIE { get; set; }
         public IEnumerable<Category> CategoryIE { get; set; }
-        public IEnumerable<Student> StudentIE { get; set; }
+       
+
     }
 }

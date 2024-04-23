@@ -12,7 +12,6 @@ namespace LearnerProject.Controllers
     public class CourseRegisterController : Controller
     {
         LearnerContext context = new LearnerContext();
-        IEClass ie = new IEClass();
         public ActionResult Index()
         {
             var values = context.CourseRegisters.ToList();
@@ -106,5 +105,36 @@ namespace LearnerProject.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+
+        [HttpGet]
+        public ActionResult StudentCourseRegister()
+        {
+            var courseList = context.Courses.ToList();
+            List<SelectListItem> course = (from x in courseList
+                                           select new SelectListItem
+                                           {
+                                               Text = x.CourseName,
+                                               Value = x.CourseId.ToString()
+            
+
+                                        }).ToList();
+
+            ViewBag.courseGetir = course;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult StudentCourseRegister(CourseRegister courseRegister)
+        {
+            string student = Session["student"].ToString(); 
+            courseRegister.StudentId= context.Students.Where(x=>x.NameSurname == student).Select(x=>x.StudentId).FirstOrDefault();
+            context.CourseRegisters.Add(courseRegister);
+            context.SaveChanges();
+            return RedirectToAction("StudentCourseRegister","CourseRegister");
+        }
+
+        
     }
 }

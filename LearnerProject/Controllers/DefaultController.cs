@@ -1,9 +1,12 @@
 ﻿using LearnerProject.Models.Context;
+using LearnerProject.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace LearnerProject.Controllers
 {
@@ -32,8 +35,17 @@ namespace LearnerProject.Controllers
         }
         public PartialViewResult DefaultCoursePartial()
         {
-            var values = context.Courses.ToList();
+            var values = context.Courses.Include(x => x.Reviews).OrderByDescending(x => x.CourseId).Take(3).ToList();
             return PartialView(values);
+        }
+
+
+        public ActionResult CourseDetail(int id )
+        {
+            var value = context.Courses.Find(id);
+            var reviewList = context.Reviews.Where(x=>x.CourseId==id).ToList();
+            ViewBag.review = reviewList;
+            return View(value);
         }
         public PartialViewResult DefaultAboutPartial()
         {
@@ -50,5 +62,8 @@ namespace LearnerProject.Controllers
             var values = context.FAQs.ToList();
             return PartialView(values);
         }
+
+
+
     }
 }

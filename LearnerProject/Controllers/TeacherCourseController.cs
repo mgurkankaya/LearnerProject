@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 
 namespace LearnerProject.Controllers
 {
@@ -14,7 +15,7 @@ namespace LearnerProject.Controllers
         public ActionResult Index()
         {
             string name = Session["TeacherName"].ToString();
-            var values = context.Courses.Where(x=>x.Teacher.NameSurname == name).ToList();
+            var values = context.Courses.Where(x => x.Teacher.NameSurname == name).ToList();
             return View(values);
         }
 
@@ -93,5 +94,77 @@ namespace LearnerProject.Controllers
             return RedirectToAction("Index");
 
         }
+
+
+
+
+        public ActionResult CourseVideo(Teacher teacher)
+        {
+
+            string name = Session["TeacherName"].ToString();
+            var values = context.CourseVideos.Where(x => x.Teacher.NameSurname == name).ToList();
+
+            
+         
+
+
+
+            
+            return View(values);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult AddCourseVideo()
+        {
+            string name = Session["TeacherName"].ToString();
+            var courses = context.Courses.Where(x => x.Teacher.NameSurname == name).ToList();
+
+
+            List<SelectListItem> coursesList = (from x in courses
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = x.CourseName,
+                                                     Value = x.CourseId.ToString()
+                                                 }).ToList();
+
+            ViewBag.course = coursesList;
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult AddCourseVideo(CourseVideo courseVideo)
+        {
+            string name = Session["TeacherName"].ToString();
+            courseVideo.TeacherId = context.Teachers.Where(x => x.NameSurname == name).Select(x => x.TeacherId).FirstOrDefault();
+            context.CourseVideos.Add(courseVideo);
+            context.SaveChanges();
+            return RedirectToAction("CourseVideo", "TeacherCourse");
+        }
+        public ActionResult DeleteCourseVideo(int id)
+        {
+            var values = context.CourseVideos.Find(id);
+            context.CourseVideos.Remove(values);
+            context.SaveChanges();
+            return RedirectToAction("CourseVideo","TeacherCourse");
+        }
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class newmig : DbMigration
     {
         public override void Up()
         {
@@ -20,6 +20,16 @@
                         Item3 = c.String(),
                     })
                 .PrimaryKey(t => t.AboutId);
+            
+            CreateTable(
+                "dbo.AdminLogins",
+                c => new
+                    {
+                        AdminLoginId = c.Int(nullable: false, identity: true),
+                        UserName = c.String(),
+                        Password = c.String(),
+                    })
+                .PrimaryKey(t => t.AdminLoginId);
             
             CreateTable(
                 "dbo.Banners",
@@ -51,39 +61,27 @@
                         Description = c.String(),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         CategoryId = c.Int(nullable: false),
-                        ClassroomId = c.Int(nullable: false),
+                        TeacherId = c.Int(),
                     })
                 .PrimaryKey(t => t.CourseId)
                 .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
-                .ForeignKey("dbo.Classrooms", t => t.ClassroomId, cascadeDelete: true)
+                .ForeignKey("dbo.Teachers", t => t.TeacherId)
                 .Index(t => t.CategoryId)
-                .Index(t => t.ClassroomId);
-            
-            CreateTable(
-                "dbo.Classrooms",
-                c => new
-                    {
-                        ClassroomId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Icon = c.String(),
-                        Description = c.String(),
-                    })
-                .PrimaryKey(t => t.ClassroomId);
+                .Index(t => t.TeacherId);
             
             CreateTable(
                 "dbo.CourseRegisters",
                 c => new
                     {
                         CourseRegisterId = c.Int(nullable: false, identity: true),
-                        StudentId = c.String(),
+                        StudentId = c.Int(nullable: false),
                         CourseId = c.Int(nullable: false),
-                        Student_StudentId = c.Int(),
                     })
                 .PrimaryKey(t => t.CourseRegisterId)
                 .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
-                .ForeignKey("dbo.Students", t => t.Student_StudentId)
-                .Index(t => t.CourseId)
-                .Index(t => t.Student_StudentId);
+                .ForeignKey("dbo.Students", t => t.StudentId, cascadeDelete: true)
+                .Index(t => t.StudentId)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.Students",
@@ -113,6 +111,56 @@
                 .Index(t => t.StudentId);
             
             CreateTable(
+                "dbo.CourseVideos",
+                c => new
+                    {
+                        CourseVideoId = c.Int(nullable: false, identity: true),
+                        CourseId = c.Int(nullable: false),
+                        VideNumber = c.Int(nullable: false),
+                        VideoUrl = c.String(),
+                        TeacherId = c.Int(),
+                    })
+                .PrimaryKey(t => t.CourseVideoId)
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .ForeignKey("dbo.Teachers", t => t.TeacherId)
+                .Index(t => t.CourseId)
+                .Index(t => t.TeacherId);
+            
+            CreateTable(
+                "dbo.Teachers",
+                c => new
+                    {
+                        TeacherId = c.Int(nullable: false, identity: true),
+                        NameSurname = c.String(),
+                        UserName = c.String(),
+                        Password = c.String(),
+                    })
+                .PrimaryKey(t => t.TeacherId);
+            
+            CreateTable(
+                "dbo.Classrooms",
+                c => new
+                    {
+                        ClassroomId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        Icon = c.String(),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.ClassroomId);
+            
+            CreateTable(
+                "dbo.Contacts",
+                c => new
+                    {
+                        ContactId = c.Int(nullable: false, identity: true),
+                        Address = c.String(),
+                        OpenHours = c.String(),
+                        Email = c.String(),
+                        Phone = c.String(),
+                    })
+                .PrimaryKey(t => t.ContactId);
+            
+            CreateTable(
                 "dbo.FAQs",
                 c => new
                     {
@@ -123,6 +171,19 @@
                         Status = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.FAQId);
+            
+            CreateTable(
+                "dbo.Messages",
+                c => new
+                    {
+                        MessageId = c.Int(nullable: false, identity: true),
+                        NameSurname = c.String(),
+                        Email = c.String(),
+                        Subject = c.String(),
+                        MessageContent = c.String(),
+                        IsRead = c.Boolean(nullable: false),
+                    })
+                .PrimaryKey(t => t.MessageId);
             
             CreateTable(
                 "dbo.Testimonials",
@@ -139,27 +200,36 @@
         
         public override void Down()
         {
+            DropForeignKey("dbo.CourseVideos", "TeacherId", "dbo.Teachers");
+            DropForeignKey("dbo.Courses", "TeacherId", "dbo.Teachers");
+            DropForeignKey("dbo.CourseVideos", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.Reviews", "StudentId", "dbo.Students");
             DropForeignKey("dbo.Reviews", "CourseId", "dbo.Courses");
-            DropForeignKey("dbo.CourseRegisters", "Student_StudentId", "dbo.Students");
+            DropForeignKey("dbo.CourseRegisters", "StudentId", "dbo.Students");
             DropForeignKey("dbo.CourseRegisters", "CourseId", "dbo.Courses");
-            DropForeignKey("dbo.Courses", "ClassroomId", "dbo.Classrooms");
             DropForeignKey("dbo.Courses", "CategoryId", "dbo.Categories");
+            DropIndex("dbo.CourseVideos", new[] { "TeacherId" });
+            DropIndex("dbo.CourseVideos", new[] { "CourseId" });
             DropIndex("dbo.Reviews", new[] { "StudentId" });
             DropIndex("dbo.Reviews", new[] { "CourseId" });
-            DropIndex("dbo.CourseRegisters", new[] { "Student_StudentId" });
             DropIndex("dbo.CourseRegisters", new[] { "CourseId" });
-            DropIndex("dbo.Courses", new[] { "ClassroomId" });
+            DropIndex("dbo.CourseRegisters", new[] { "StudentId" });
+            DropIndex("dbo.Courses", new[] { "TeacherId" });
             DropIndex("dbo.Courses", new[] { "CategoryId" });
             DropTable("dbo.Testimonials");
+            DropTable("dbo.Messages");
             DropTable("dbo.FAQs");
+            DropTable("dbo.Contacts");
+            DropTable("dbo.Classrooms");
+            DropTable("dbo.Teachers");
+            DropTable("dbo.CourseVideos");
             DropTable("dbo.Reviews");
             DropTable("dbo.Students");
             DropTable("dbo.CourseRegisters");
-            DropTable("dbo.Classrooms");
             DropTable("dbo.Courses");
             DropTable("dbo.Categories");
             DropTable("dbo.Banners");
+            DropTable("dbo.AdminLogins");
             DropTable("dbo.Abouts");
         }
     }

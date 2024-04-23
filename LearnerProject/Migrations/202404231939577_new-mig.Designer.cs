@@ -7,18 +7,18 @@ namespace LearnerProject.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class teachertableadded : IMigrationMetadata
+    public sealed partial class newmig : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(teachertableadded));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(newmig));
         
         string IMigrationMetadata.Id
         {
-            get { return "202404181727466_teacher-table-added"; }
+            get { return "202404231939577_new-mig"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target
