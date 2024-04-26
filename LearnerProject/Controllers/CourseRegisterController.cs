@@ -111,30 +111,31 @@ namespace LearnerProject.Controllers
         [HttpGet]
         public ActionResult StudentCourseRegister()
         {
-            var courseList = context.Courses.ToList();
-            List<SelectListItem> course = (from x in courseList
-                                           select new SelectListItem
-                                           {
-                                               Text = x.CourseName,
-                                               Value = x.CourseId.ToString()
-            
+            var courses = context.Courses.ToList();
 
-                                        }).ToList();
 
-            ViewBag.courseGetir = course;
+            List<SelectListItem> courseList = (from y in courses
+                                               select new SelectListItem
+                                               {
+                                                   Text = y.CourseName,
+                                                   Value = y.CourseId.ToString()
+                                               }).ToList();
+
+            ViewBag.course = courseList;
+
+
+           
             return View();
         }
 
         [HttpPost]
         public ActionResult StudentCourseRegister(CourseRegister courseRegister)
         {
-            string student = Session["student"].ToString(); 
-            courseRegister.StudentId= context.Students.Where(x=>x.NameSurname == student).Select(x=>x.StudentId).FirstOrDefault();
+            string studentvalue = Session["student"].ToString(); 
+            courseRegister.StudentId= context.Students.Where(x=>x.UserName == studentvalue).Select(x=>x.StudentId).FirstOrDefault();
             context.CourseRegisters.Add(courseRegister);
             context.SaveChanges();
             return RedirectToAction("StudentCourseRegister","CourseRegister");
         }
-
-        
     }
 }

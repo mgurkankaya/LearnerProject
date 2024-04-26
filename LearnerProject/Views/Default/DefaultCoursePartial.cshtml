@@ -16,7 +16,7 @@
                     <div class="custom-media-body">
                         <div class="d-flex justify-content-between pb-3">
                             <div class="text-primary"><span class="uil uil-book-open"></span> <span>@item.Category.CategoryName</span></div>
-                            <div class="review"><span class="icon-star"></span> <span>  <span>
+                            <div class="review"><span class="icon-star"></span> <span>  
     @{
         var value = item.Reviews.FirstOrDefault(x => x.CourseId == item.CourseId);
     }
@@ -28,7 +28,7 @@
     { <span class="icon-star"></span>
         <span>@item.Reviews.Where(x => x.CourseId == item.CourseId).Average(x => x.ReviewValue).ToString("0.00")</span>
     }
-</span></span></div>
+</span></div>
                         </div>
                         <h3>@item.CourseName</h3>
                         <p class="mb-4">@item.Description</p>

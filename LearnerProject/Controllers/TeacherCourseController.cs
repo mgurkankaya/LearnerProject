@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 
+using System.Web.UI.WebControls;
+
 namespace LearnerProject.Controllers
 {
     public class TeacherCourseController : Controller
@@ -100,9 +102,9 @@ namespace LearnerProject.Controllers
 
         public ActionResult CourseVideo(Teacher teacher)
         {
-
-            string name = Session["TeacherName"].ToString();
-            var values = context.CourseVideos.Where(x => x.Teacher.NameSurname == name).ToList();
+                  
+           string name = Session["TeacherName"].ToString();
+           var values = context.CourseVideos.Where(x => x.Teacher.NameSurname == name).ToList();
 
             
          

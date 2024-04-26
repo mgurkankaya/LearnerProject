@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace LearnerProject.Controllers
 {
-   
+    [AllowAnonymous]
     public class ContactController : Controller
     {
         LearnerContext context = new LearnerContext();

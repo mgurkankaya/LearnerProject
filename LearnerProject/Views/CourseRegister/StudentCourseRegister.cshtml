@@ -1,13 +1,16 @@
-﻿@model LearnerProject.Models.Entities.CourseRegister
+﻿﻿@model LearnerProject.Models.Entities.CourseRegister
 @{
     ViewBag.Title = "StudentCourseRegister";
     Layout = "~/Views/StudentLayout/Index.cshtml";
 }
 
-<h2>Kurs Kayıt Sayfası</h2>
+<h3>Kurs Kayıt Sayfası</h3>
 
-<form  method="post">
-    <label> Kurs adı</label>
-    @Html.DropDownListFor(x=>x.CourseId,(List<SelectListItem>)ViewBag.courseGetir,"Seç", new {@class = "form-control"})
-<button class="btn btn-outline-primary">Satın Al</button>
+
+<form action="StudentCourseRegister" method="post">
+
+   
+    @Html.DropDownListFor(y => y.CourseId, (List<SelectListItem>)ViewBag.course, "Kurs Seç", new { @class = "form-control mb-3" })
+
+    <button class="btn btn-outline-danger">Kursu Satın Al</button>
 </form>
